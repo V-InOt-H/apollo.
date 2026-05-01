@@ -539,7 +539,7 @@ footer{padding:80px 48px 48px;position:relative;overflow:hidden;min-height:70vh;
       <div class="projects-progress"><div class="projects-progress-track"><div class="projects-progress-fill" id="projects-progress-fill"></div></div></div>
       <div class="projects-track" id="projects-track">
         <!-- Slide 1: Super G Super Market -->
-        <div class="project-slide" data-slide="0" onclick="location.href='project-super-g.html'" style="cursor:pointer;">
+        <div class="project-slide" data-slide="0">
           <div class="project-slide-image">
             <div class="project-slide-image-inner" style="background:linear-gradient(135deg,#0e1a2e,#0d1b2a 50%,#1b2838);position:relative;overflow:hidden">
               <div class="project-slide-image-glow"></div>
@@ -560,11 +560,11 @@ footer{padding:80px 48px 48px;position:relative;overflow:hidden;min-height:70vh;
             <div class="project-slide-tech">
               <span class="tech-tag">React</span><span class="tech-tag">Node.js</span><span class="tech-tag">MongoDB</span><span class="tech-tag">Express</span><span class="tech-tag">Stripe</span><span class="tech-tag">Socket.io</span>
             </div>
-            <a href="project-super-g.html" class="project-slide-cta">Learn More <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></a>
+            <div class="project-slide-cta" data-project="0">Learn More <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></div>
           </div>
         </div>
         <!-- Slide 2: Redacted -->
-        <div class="project-slide" data-slide="1" onclick="location.href='project-redacted.html'" style="cursor:pointer;">
+        <div class="project-slide" data-slide="1">
           <div class="project-slide-image">
             <div class="project-slide-image-inner" style="background:linear-gradient(135deg,#1a0e2e,#2a1b0d 50%,#281b38);position:relative;overflow:hidden">
               <div class="project-slide-image-glow"></div>
@@ -585,7 +585,7 @@ footer{padding:80px 48px 48px;position:relative;overflow:hidden;min-height:70vh;
             <div class="project-slide-tech">
               <span class="tech-tag">Rust</span><span class="tech-tag">FastAPI</span>
             </div>
-            <a href="project-redacted.html" class="project-slide-cta">Learn More <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></a>
+            <div class="project-slide-cta" data-project="1">Learn More <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></div>
           </div>
         </div>
         <!-- Slide 3: Yours -->
@@ -842,9 +842,9 @@ footer{padding:80px 48px 48px;position:relative;overflow:hidden;min-height:70vh;
 
 // ── Data ──
 var projects=[
-  {tag:'Retail Tech',name:'Super G Super Market',description:'All-in-one POS solution for supermarkets with inventory management, billing, customer loyalty, and real-time sales analytics. Streamlines checkout processes and reduces wait times by 60% for high-volume retail environments.',client:'Super G Markets',duration:'14 weeks',year:'2026',tech:['React','Node.js','MongoDB','Express','Stripe','Socket.io'],gradient:'linear-gradient(135deg,#0e1a2e,#0d1b2a 50%,#1b2838)'},
-  {tag:'Automotive',name:'Redacted',description:'Automated Calibration Tracking & Notification System for a Tier-1 automotive enterprise. Developed an automated calibration tracking and reminder platform for a large industrial manufacturing environment.',client:'Tier-1 Automotive',duration:'16 weeks',year:'2026',tech:['Rust','FastAPI'],gradient:'linear-gradient(135deg,#1a0e2e,#2a1b0d 50%,#281b38)'},
-  {tag:'Next In Queue',name:'Your Project',description:'We build what you envision. Let\'s start something extraordinary together.',client:'Custom',duration:'48h to first draft',year:'2026',tech:['GET IN TOUCH'],gradient:'radial-gradient(ellipse at center,rgba(255,47,0,.08),transparent 70%)'}
+  {tag:'Retail Tech',name:'Super G Super Market',description:'All-in-one POS solution for supermarkets with inventory management, billing, customer loyalty, and real-time sales analytics. Streamlines checkout processes and reduces wait times by 60% for high-volume retail environments.',client:'Super G Markets',duration:'14 weeks',year:'2026',tech:['React','Node.js','MongoDB','Express','Stripe','Socket.io'],gradient:'linear-gradient(135deg,#0e1a2e,#0d1b2a 50%,#1b2838)',image:'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1920&q=80'},
+  {tag:'Automotive',name:'Redacted',description:'Automated Calibration Tracking & Notification System for a Tier-1 automotive enterprise. Developed an automated calibration tracking and reminder platform for a large industrial manufacturing environment.',client:'Tier-1 Automotive',duration:'16 weeks',year:'2026',tech:['Rust','FastAPI'],gradient:'linear-gradient(135deg,#1a0e2e,#2a1b0d 50%,#281b38)',image:'redacted.jpg.jpeg'},
+  {tag:'Next In Queue',name:'Your Project',description:'We build what you envision. Let\'s start something extraordinary together.',client:'Custom',duration:'48h to first draft',year:'2026',tech:['GET IN TOUCH'],gradient:'radial-gradient(ellipse at center,rgba(255,47,0,.08),transparent 70%)',image:''}
 ];
 
 var architects=[
@@ -1028,10 +1028,11 @@ function openProjectOverlay(idx,evt){
   var cy=evt?evt.clientY:window.innerHeight/2;
   projectOverlay.style.setProperty('--cx',cx+'px');
   projectOverlay.style.setProperty('--cy',cy+'px');
+  var imageHtml=p.image?'<div class="project-detail-image"><img src="'+p.image+'" alt="'+p.name+'" style="width:100%;height:100%;object-fit:cover;border-radius:16px;"></div>':'<div class="project-detail-image"><div class="project-detail-image-placeholder" style="background:'+p.gradient+'">'+p.name+'</div></div>';
   projectDetailContent.innerHTML=
     '<p class="project-detail-tag">'+p.tag+'</p>'+
     '<h2 class="project-detail-title">'+p.name+'</h2>'+
-    '<div class="project-detail-image"><div class="project-detail-image-placeholder" style="background:'+p.gradient+'">'+p.name+'</div></div>'+
+    imageHtml+
     '<div class="project-detail-body">'+
       '<div class="project-detail-description"><p>'+p.description+'</p></div>'+
       '<div class="project-detail-meta">'+
